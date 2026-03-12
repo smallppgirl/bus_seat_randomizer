@@ -1,0 +1,273 @@
+/* ── Reset & Base ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: #1a1a2e;
+  color: #eee;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  padding: 32px 16px;
+}
+
+h1 {
+  font-size: 1.8rem;
+  letter-spacing: 0.04em;
+  color: #f0e68c;
+  text-shadow: 0 0 12px rgba(240, 230, 140, 0.5);
+}
+
+/* ── Bus Container ── */
+#bus {
+  background: #16213e;
+  border: 3px solid #0f3460;
+  border-radius: 24px 24px 16px 16px;
+  padding: 16px 20px 20px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+  min-width: 260px;
+}
+
+.bus-front {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  padding-bottom: 12px;
+  border-bottom: 2px dashed #0f3460;
+  margin-bottom: 14px;
+  color: #888;
+  font-size: 0.85rem;
+}
+
+.steering-wheel {
+  font-size: 1.6rem;
+}
+
+/* ── Seat Grid ── */
+/*
+  Each row is rendered as:  [seat] [seat] [gap] [seat] [seat]
+  We use a 5-column grid: col1 col2 (aisle) col4 col5
+  The aisle column has no seats, just space.
+*/
+.seat-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.seat-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 28px 1fr 1fr;
+  gap: 8px;
+  align-items: center;
+}
+
+/* Last row: 5 seats in one straight line, no aisle */
+.seat-row.last-row {
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+}
+
+.aisle {
+  /* empty spacer column */
+}
+
+/* ── Seat States ── */
+.seat {
+  width: 44px;
+  height: 44px;
+  border-radius: 6px 6px 4px 4px;
+  background: #2a3a5c;
+  border: 2px solid #3a4f7a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #9ab;
+  cursor: default;
+  transition: background 0.1s, border-color 0.1s, color 0.1s;
+  /* seat back detail */
+  position: relative;
+}
+
+.seat::after {
+  content: '';
+  position: absolute;
+  bottom: 3px;
+  left: 6px;
+  right: 6px;
+  height: 3px;
+  background: rgba(255,255,255,0.07);
+  border-radius: 2px;
+}
+
+/* Rolling highlight — fast cycling */
+.seat.rolling {
+  background: #e8a020;
+  border-color: #ffc04a;
+  color: #1a6ebd !important;
+  font-weight: 800;
+  text-shadow: 0 0 2px rgba(0,0,0,0.4);
+  transform: scale(1.08);
+  box-shadow: 0 0 10px rgba(232, 160, 32, 0.7);
+}
+
+/* Winner — gold with pulsing glow */
+.seat.winner {
+  background: #ffd700;
+  border-color: #fff176;
+  color: #1a6ebd !important;
+  font-weight: 800;
+  text-shadow: 0 0 2px rgba(0,0,0,0.4);
+  animation: pulse 1.2s ease-in-out infinite;
+  z-index: 1;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    box-shadow: 0 0 8px 2px rgba(255, 215, 0, 0.6);
+    transform: scale(1.05);
+  }
+  50% {
+    box-shadow: 0 0 20px 6px rgba(255, 215, 0, 0.9);
+    transform: scale(1.12);
+  }
+}
+
+/* Already picked — dimmed */
+.seat.picked {
+  background: #1a2030;
+  border-color: #252f45;
+  color: #3a4a5a;
+  text-decoration: line-through;
+}
+
+/* ── Controls ── */
+.controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+#counter {
+  font-size: 1rem;
+  color: #8899aa;
+}
+
+button {
+  padding: 12px 32px;
+  font-size: 1rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.1s;
+}
+
+button:active { transform: scale(0.97); }
+
+#drawBtn {
+  background: linear-gradient(135deg, #e8a020, #f0c040);
+  color: #1a1a2e;
+  font-size: 1.1rem;
+  padding: 14px 40px;
+  box-shadow: 0 4px 16px rgba(232, 160, 32, 0.4);
+}
+
+#drawBtn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none;
+}
+
+#resetBtn {
+  background: #2a3a5c;
+  color: #8899aa;
+  font-size: 0.9rem;
+  padding: 8px 24px;
+}
+
+#resetBtn:hover { opacity: 0.8; }
+
+/* ── Winner Banner ── */
+.winner-banner {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #ffd700;
+  text-shadow: 0 0 12px rgba(255, 215, 0, 0.7);
+  text-align: center;
+  animation: fadeIn 0.4s ease;
+}
+
+.winner-banner.hidden { display: none; }
+
+/* ── Winner List ── */
+.winner-list {
+  background: #16213e;
+  border: 2px solid #0f3460;
+  border-radius: 12px;
+  padding: 16px 24px;
+  min-width: 220px;
+  max-width: 340px;
+  width: 100%;
+}
+
+.winner-list h2 {
+  font-size: 1rem;
+  color: #8899aa;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 12px;
+}
+
+.winner-list.hidden { display: none; }
+
+#winnerOl {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-height: 260px;
+  overflow-y: auto;
+}
+
+#winnerOl li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  animation: fadeIn 0.3s ease;
+}
+
+#winnerOl li .rank {
+  font-size: 0.75rem;
+  color: #556;
+  width: 22px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+#winnerOl li .badge {
+  background: #ffd700;
+  color: #1a6ebd !important;
+  font-weight: 800;
+  font-size: 0.9rem;
+  text-shadow: 0 0 2px rgba(0,0,0,0.4);
+  padding: 3px 12px;
+  border-radius: 20px;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
