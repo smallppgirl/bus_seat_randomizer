@@ -3,35 +3,40 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>COMPASSVALE VILLA RC Prize Draw</title>
+  <title>VILLA RC Lucky Draw</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="page">
-    <h1>🎉 COMPASSVALE VILLA RC Prize Draw</h1>
+    <h1>🎉 VILLA RC Lucky Draw</h1>
 
-    <div id="bus">
-      <!-- Driver area -->
-      <div class="bus-front">
-        <div class="steering-wheel">🚌</div>
-        <span>Driver</span>
+    <div class="main-layout">
+      <!-- Left: bus + controls -->
+      <div class="left-panel">
+        <div id="bus">
+          <div class="bus-front">
+            <div class="steering-wheel">🚌</div>
+            <span>Driver</span>
+          </div>
+          <div class="seat-grid" id="seatGrid"></div>
+        </div>
+
+        <div class="controls">
+          <p id="counter">0 / 49 drawn</p>
+          <button id="drawBtn">🎲 Draw Next Winner</button>
+          <button id="resetBtn">↺ Reset</button>
+        </div>
+
+        <div id="winnerBanner" class="winner-banner hidden"></div>
       </div>
 
-      <!-- Seat rows 1–11: 4 seats per row (2 | aisle | 2) -->
-      <div class="seat-grid" id="seatGrid"></div>
-    </div>
-
-    <div class="controls">
-      <p id="counter">0 / 49 drawn</p>
-      <button id="drawBtn">🎲 Draw Next Winner</button>
-      <button id="resetBtn">↺ Reset</button>
-    </div>
-
-    <div id="winnerBanner" class="winner-banner hidden"></div>
-
-    <div id="winnerList" class="winner-list hidden">
-      <h2>Winners</h2>
-      <ol id="winnerOl"></ol>
+      <!-- Right: winner list -->
+      <div class="right-panel">
+        <div id="winnerList" class="winner-list hidden">
+          <h2>Winners</h2>
+          <ol id="winnerOl"></ol>
+        </div>
+      </div>
     </div>
   </div>
 

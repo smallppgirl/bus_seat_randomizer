@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git init)",
+      "Bash(git add index.html style.css script.js CLAUDE.md)",
+      "Bash(git commit:*)"
+    ]
+  }
+}
