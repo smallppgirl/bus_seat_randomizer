@@ -40,8 +40,13 @@ h1 {
   gap: 14px;
 }
 
+.panel-spacer {
+  width: 70px;   /* half of right-panel → bus sits slightly left of true centre */
+  flex-shrink: 0;
+}
+
 .right-panel {
-  width: 100px;
+  width: 140px;
   flex-shrink: 0;
   padding-top: 4px;
 }
@@ -272,9 +277,9 @@ button:active { transform: scale(0.97); }
   background: #ffd700;
   color: #1a6ebd !important;
   font-weight: 800;
-  font-size: 0.75rem;
+  font-size: 0.85rem;
   text-shadow: 0 0 2px rgba(0,0,0,0.4);
-  padding: 2px 5px;
+  padding: 3px 10px;
   border-radius: 20px;
   white-space: nowrap;
 }
