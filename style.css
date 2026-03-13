@@ -85,18 +85,28 @@ h1 {
 
 .seat-row {
   display: grid;
-  grid-template-columns: 1fr 1fr 20px 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   gap: 5px;
   align-items: center;
 }
 
-/* Last row: 5 seats in one straight line, no aisle */
+/* Last row: same 5-column grid, no aisle needed */
 .seat-row.last-row {
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
 }
 
 .aisle {
-  /* empty spacer column */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.aisle::after {
+  content: '';
+  width: 2px;
+  height: 100%;
+  background: rgba(255,255,255,0.06);
+  border-radius: 1px;
 }
 
 /* ── Seat States ── */
